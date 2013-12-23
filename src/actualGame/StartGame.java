@@ -370,12 +370,10 @@ public class StartGame {
 		final String delimS = "";
 		int y=0;
 		String theArray[] = longestString.split(delimS);
-		if (theBoundsX!=0 && theBoundsY!=0){
-		if (necessitateExistingString>=1){
+		if (theBoundsX!=0 && theBoundsY!=0 && necessitateExistingString>=1){
 			while (!theArray[y].equals(importantChar)){
 				y++;
 			}
-		}
 		}
 		y--;
 		return y;
@@ -394,133 +392,84 @@ public class StartGame {
 		Random generator = new Random();
 		int r = generator.nextInt(172871);
 		int character=0;
+		
 		if (r<=13385){
 			character = 65;
 		}
-		else{
-			if (r<=16801){
-				character = 66;
-			}
-			else{
-				if (r<=23656){
-					character = 67;
-				}
-				else{
-					if (r<=29712){
-						character = 68;
-					}
-					else {
-						if (r<=49786){
-							character = 69;
-						}
-						else{
-							if (r<=52002){
-								character = 70;
-							}
-							else{
-								if (r<=56781){
-									character = 71;
-								}
-								else{
-									if (r<=60831){
-										character = 72;
-									}
-									else{
-										if (r<=76134){
-											character = 73;
-										}
-										else{
-											if (r<=76445){
-												character = 74;
-											}
-											else{
-												if(r<=78108){
-													character = 75;
-												}
-												else{
-													if(r<=87467){
-														character = 76;
-													}
-													else{
-														if(r<92286){
-															character = 77;
-														}
-														else{
-															if(r<=103743){
-																character = 78;
-															}
-															else{
-																if(r<=114834){
-																	character = 79;
-																}
-																else{
-																	if(r<=119742){
-																		character = 80;
-																	}
-																	else{
-																		if(r<=120027){
-																			character = 81;
-																		}
-																		else{
-																			if(r<=132072){
-																				character = 82;
-																			}
-																			else{
-																				if(r<=148775){
-																					character = 83;
-																				}
-																				else{
-																					if(r<=159996){
-																						character = 84;
-																					}
-																					else{
-																						if(r<=165693){
-																							character = 85;
-																						}
-																						else{
-																							if(r<=167335){
-																								character = 86;
-																							}
-																							else{
-																								if(r<=168738){
-																									character = 87;
-																								}
-																								else{
-																									if(r<=169219){
-																										character = 88;
-																									}
-																									else{
-																										if(r<=172020){
-																											character = 89;
-																										}
-																										else{
-																											if(r<=172871){
-																												character = 90;
-																											}
-																										}
-																									}
-																								}
-																							}
-																						}
-																					}
-																				}
-																			}
-																		}
-																	}
-																}
-															}
-														}
-													}
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			}
+		else if (r<=16801){
+			character = 66;
+		}
+		else if (r<=23656){
+			character = 67;
+		}
+		else if (r<=29712){
+			character = 68;
+		}
+		else if (r<=49786){
+			character = 69;
+		}
+		else if (r<=52002){
+			character = 70;
+		}
+		else if (r<=56781){
+			character = 71;
+		}
+		else if (r<=60831){
+			character = 72;
+		}
+		else if (r<=76134){
+			character = 73;
+		}
+		else if (r<=76445){
+			character = 74;
+		}
+		else if(r<=78108){
+			character = 75;
+		}
+		else if(r<=87467){
+			character = 76;
+		}
+		else if(r<92286){
+			character = 77;
+		}
+		else if(r<=103743){
+			character = 78;
+		}
+		else if(r<=114834){
+			character = 79;
+		}
+		else if(r<=119742){
+			character = 80;
+		}
+		else if(r<=120027){
+			character = 81;
+		}
+		else if(r<=132072){
+			character = 82;
+		}
+		else if(r<=148775){
+			character = 83;
+		}
+		else if(r<=159996){
+			character = 84;
+		}
+		else if(r<=165693){
+			character = 85;
+		}
+		else if(r<=167335){
+			character = 86;
+		}
+		else if(r<=168738){
+			character = 87;
+		}
+		else if(r<=169219){
+			character = 88;
+		}
+		else if(r<=172020){
+			character = 89;
+		}
+		else if(r<=172871){
+			character = 90;
 		}
 		return character;
 	}
