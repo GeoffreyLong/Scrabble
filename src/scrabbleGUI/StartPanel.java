@@ -22,9 +22,12 @@ public class StartPanel extends JPanel implements ActionListener{
 	private JLabel title;
 	private JButton startGame;
 	private JLabel lblHowManyTurns;
+	private FrameDriver frameDriver;
 	
-	public StartPanel(){
+	
+	public StartPanel(FrameDriver frameDriver){
 		setBounds(0,0,400,400);
+		this.frameDriver = frameDriver;
 		initComponents();
 		initLayout();
 	}
@@ -96,8 +99,8 @@ public class StartPanel extends JPanel implements ActionListener{
 		}
 		
 		if (e.getActionCommand().equals("Start Game")){
-			int turnNumber = Integer.valueOf(txtEnterHere.getText());
-			StartGame game = new StartGame(players, turnNumber);
+			int numberOfTurns = Integer.valueOf(txtEnterHere.getText());
+			frameDriver.startGame(players, numberOfTurns);
 		}
 	}
 }
