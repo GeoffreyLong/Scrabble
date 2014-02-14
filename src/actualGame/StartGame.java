@@ -387,7 +387,7 @@ public class StartGame {
 		gameBoard.add(wordLabel);
 	}
 	
-	
+	//Gets a character based on frequency
 	public int getChars(){
 		Random generator = new Random();
 		int r = generator.nextInt(172871);

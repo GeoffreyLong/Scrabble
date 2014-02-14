@@ -7,7 +7,7 @@ import javax.swing.JFrame;
 import actualGame.StartGame;
 
 public class FrameDriver {
-	Frame frame;
+	public Frame frame;
 	StartPanel startPanel = new StartPanel(this);
 	
 	public FrameDriver(Frame frame){
