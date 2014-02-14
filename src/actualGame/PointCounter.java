@@ -12,7 +12,8 @@ public class PointCounter {
 	public boolean checkValidity(String theString){
 		boolean theBoolean = false;
 		ArrayList<String> list = new ArrayList<String>();
-		String fileName = "C:\\Users\\geoff\\Desktop\\eclipse\\ScrabbleWordsOne.txt";
+		String fileName = System.getProperty("user.dir");
+		fileName += "/src/ScrabbleWordsOne.txt";
 		list = readWordsFromFile(fileName);
 		if (list.contains(theString)){
 			theBoolean=true;
