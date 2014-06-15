@@ -15,13 +15,9 @@ import scrabbleGUI.*;
 
 public class StartGame {
 
-	int playerNumber;
 	JPanel gameBoard = new JPanel();
-	private String theWord ="";
-	public int pointScore;
 	JPanel playerPanel = new JPanel();
 	JLabel wordLabel = new JLabel();
-	int wordGuess;
 	JPanel panelButtons = new JPanel();
 	JPanel charPane = new JPanel();
 	BoardFrame mainPanel = new BoardFrame();
@@ -55,6 +51,7 @@ public class StartGame {
 	
 	public Player playerOne;
 	public Player playerTwo;
+	public Player currentPlayer;
 	
 	public String longestString;
 	
@@ -62,6 +59,7 @@ public class StartGame {
 		// Is there a design pattern for this (factory?)
 		playerOne = new Player(1, turns);
 		playerTwo = new Player(2, turns);
+		currentPlayer = playerOne;
 		
 		totalTurns = turns;
 		numberOfTurns=0;
@@ -86,8 +84,6 @@ public class StartGame {
 		
 		gameBoard = mainPanel.createGameBoard(mainPanel);
 		
-		playerNumber = 1;
-		wordGuess=1;
 		existingStringCount=0;
 		necessitateExistingString=0;
 		vert=0;
@@ -111,7 +107,7 @@ public class StartGame {
 		annul.setBounds(0,0,100,50);
 		annul.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				theWord="";
+				currentPlayer.setWordGuess("");
 				wordLabel.setText(null);
 			}
 		});
@@ -120,135 +116,27 @@ public class StartGame {
 		createWord.setBounds(0,50,100,50);
 		createWord.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int playerOneScore = Integer.valueOf(playerOne.getCurrentScore());
-				int playerTwoScore = Integer.valueOf(playerTwo.getCurrentScore());
-				
 				PointCounter counts= new PointCounter();
 				wordLabel.setText(null);
-				boolean otherBoolean = counts.checkValidity(theWord);
-				if (otherBoolean==false){
-//					gameBoard.setBackground(Color.RED);
-				}
-				if (existingStringCount>1){
-					existingStringCount=0;
-				}
-				else{
-				if (otherBoolean==true){
-					if (theWord.length()==longestString.length()){
-						if (playerOneScore>playerTwoScore && playerNumber==2){
-							
-						}
-						if (playerOneScore>playerTwoScore && playerNumber==1){
-							longestString = theWord;
-							importantChar = theLastChar;
-							theBoundsX = mysteryBoundsX;
-							theBoundsY = mysteryBoundsY;
-							finalVert = vert;
-						}
-						if (playerTwoScore>playerOneScore && playerNumber ==1){
-							
-						}
-						if (playerTwoScore>playerOneScore && playerNumber ==2){
-							longestString = theWord;
-							importantChar = theLastChar;
-							theBoundsX = mysteryBoundsX;
-							theBoundsY = mysteryBoundsY;
-							finalVert = vert;
-						}
-					}
-					if (theWord.length()>longestString.length()){
-						longestString = theWord;
-						importantChar = theLastChar;
-						theBoundsX = mysteryBoundsX;
-						theBoundsY = mysteryBoundsY;
-						finalVert = vert;
-					}
-//					gameBoard.setBackground(Color.GREEN);
-					pointScore = counts.thePoints(theWord, playerNumber);
-					if (playerNumber==1){
-						playerOne.incrementScore(pointScore);
+				boolean isWordValid = counts.checkValidity(currentPlayer.getWordGuess());
+				if (isWordValid){
+					int pointScore = counts.thePoints(currentPlayer.getWordGuess(), currentPlayer.getPlayerNumber());
+					currentPlayer.incrementScore(pointScore);
+					if (currentPlayer.getPlayerNumber() == 1)
 						playerOneScoreLabel.setText(playerOne.getCurrentScore());
-					}
-					if (playerNumber==2){
-						playerTwo.incrementScore(pointScore);
+					if (currentPlayer.getPlayerNumber() == 2)
 						playerTwoScoreLabel.setText(playerTwo.getCurrentScore());
+				
+					if (currentPlayer.getWordGuess().length() > longestString.length()){
+						longestString = currentPlayer.getWordGuess();
 					}
-				}
-				existingStringCount=0;
-				}
-				theWord="";
-				if (wordGuess >= 1){
-					if (playerNumber == 1){
-						playerNumber = 2;
-						playerNameLabel.setText("Player Two");
-						gameBoard.repaint();
-					}
-					else {
-						playerNumber = 1;
-						playerNameLabel.setText("Player One");
-						gameBoard.repaint();
-						newButtons();
-						int m=0;
-						if (necessitateExistingString>=1){
-							m = importantCharIndex(longestString);
-						}
-						final String delimS = "";
-						String[] getLastChar = longestString.split(delimS);
-						int n = 1;
-//						if (necessitateExistingString<=0){
-//							n=1;
-//						}
-						while (n<getLastChar.length){
-							if (getLastChar[n]!=""){
-								gameBoard.add(createButtons(m, n, getLastChar));
-							}
-							gameBoard.repaint();
-							n++;
-						}
-						longestString="";
-						necessitateExistingString=1;
-					}
-					wordGuess = 1;
+					
+					advanceGame();
 				}
 				else{
-					wordGuess++;
+					//WORD IS INVALID
 				}
-				if (playerNumber==1){
-					numberOfTurns++;
-					turnsLeft.removeAll();
-					theTurnsLeft = "Turns Left = " + Integer.toString(initialTurns-numberOfTurns);
-					turnsLeft.setText(theTurnsLeft);
-					gameBoard.add(turnsLeft);
-				}
-/*				
-				String wordGuessString = String.valueOf(wordGuess);
-				guessNumber.setText(wordGuessString);
-				mainPanel.add(guessNumber);
-				
-				String playerNumber = String.valueOf(playerName);
-				playerName.setText(playerNumber);
-				mainPanel.add(playerName);
-				*/
-				if (numberOfTurns>=totalTurns){
-					gameBoard.removeAll();
-					JLabel finalScore = new JLabel();
-					finalScore.setLayout(null);
-					if (playerOneScore>playerTwoScore){
-						finalScore.setText("Player One Wins");
-					}
-					else {
-						if (playerTwoScore>playerOneScore){
-							finalScore.setText("Player Two Wins");
-						}
-						else {
-							finalScore.setText("It's a tie");
-						}
-					}
-					finalScore.setBounds(0,0,600,200);
-					finalScore.setFont(new Font("Tahoma", Font.BOLD, 30));
-					gameBoard.add(finalScore);
-					gameBoard.repaint();
-				}
+				currentPlayer.setWordGuess("");
 			}
 		});
 		panelButtons.add(createWord);
@@ -256,14 +144,8 @@ public class StartGame {
 		charPane.setLayout(null);
 		newButtons();
 		
-		String wordGuessString = String.valueOf(wordGuess);
-		guessNumber.setText(wordGuessString);
-		mainPanel.add(guessNumber);
-		
-		String playerNumber = String.valueOf(playerName);
-		playerName.setText(playerNumber);
+		playerName.setText(String.valueOf(currentPlayer.getPlayerNumber()));
 		mainPanel.add(playerName);
-		
 	}
 	
 	public void newButtons (){
@@ -387,7 +269,8 @@ public class StartGame {
 	}
 	
 	public void createString(String arg){
-		theWord = theWord + arg;
+		String theWord = currentPlayer.getWordGuess() + arg;
+		currentPlayer.setWordGuess(theWord);
 		wordLabel.setText(theWord);
 		wordLabel.setBounds(5,0,200,30);
 		wordLabel.setFont(new Font("Tahoma", Font.BOLD, 30));
@@ -479,5 +362,82 @@ public class StartGame {
 			character = 90;
 		}
 		return character;
+	}
+	
+	public void advanceGame(){
+		if (currentPlayer.getPlayerNumber() == 2){
+			importantChar = theLastChar;
+			theBoundsX = mysteryBoundsX;
+			theBoundsY = mysteryBoundsY;
+			finalVert = vert;
+//			gameBoard.setBackground(Color.GREEN);
+		}
+		existingStringCount=0;
+
+		if (currentPlayer.getPlayerNumber() == 1){
+			currentPlayer = playerTwo;
+			playerNameLabel.setText("Player Two");
+			gameBoard.repaint();
+		}
+		else {
+			currentPlayer = playerOne;
+			playerNameLabel.setText("Player One");
+			gameBoard.repaint();
+			newButtons();
+			int m=0;
+			if (necessitateExistingString>=1){
+				m = importantCharIndex(longestString);
+			}
+			final String delimS = "";
+			String[] getLastChar = longestString.split(delimS);
+			int n = 1;
+//				if (necessitateExistingString<=0){
+//					n=1;
+//				}
+			while (n<getLastChar.length){
+				if (getLastChar[n]!=""){
+					gameBoard.add(createButtons(m, n, getLastChar));
+				}
+				gameBoard.repaint();
+				n++;
+			}
+			longestString="";
+			necessitateExistingString=1;
+		}
+
+		if (currentPlayer.getPlayerNumber()==1){
+			numberOfTurns++;
+			turnsLeft.removeAll();
+			theTurnsLeft = "Turns Left = " + Integer.toString(initialTurns-numberOfTurns);
+			turnsLeft.setText(theTurnsLeft);
+			gameBoard.add(turnsLeft);
+		}
+
+		if (numberOfTurns>=totalTurns){
+			gameEndLogic();
+		}
+	}
+	
+	public void gameEndLogic(){
+		int playerOneScore = Integer.valueOf(playerOne.getCurrentScore());
+		int playerTwoScore = Integer.valueOf(playerTwo.getCurrentScore());
+		gameBoard.removeAll();
+		JLabel finalScore = new JLabel();
+		finalScore.setLayout(null);
+		if (playerOneScore>playerTwoScore){
+			finalScore.setText("Player One Wins");
+		}
+		else {
+			if (playerTwoScore>playerOneScore){
+				finalScore.setText("Player Two Wins");
+			}
+			else {
+				finalScore.setText("It's a tie");
+			}
+		}
+		finalScore.setBounds(0,0,600,200);
+		finalScore.setFont(new Font("Tahoma", Font.BOLD, 30));
+		gameBoard.add(finalScore);
+		gameBoard.repaint();
 	}
 }
