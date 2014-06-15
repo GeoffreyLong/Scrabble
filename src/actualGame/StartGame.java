@@ -31,8 +31,6 @@ public class StartGame {
 	JLabel playerTwoScoreLabel = new JLabel();
 	String buttonName;
 	PointCounter points = new PointCounter();
-	int playerOneScore;
-	int playerTwoScore;
 	String theLastChar;
 	String importantChar;
 	int mysteryBoundsX;
@@ -55,9 +53,16 @@ public class StartGame {
 	int initialTurns;
 	String theTurnsLeft = "";
 	
+	public Player playerOne;
+	public Player playerTwo;
+	
 	public String longestString;
 	
 	public StartGame(int players, int turns) {
+		// Is there a design pattern for this (factory?)
+		playerOne = new Player(1, turns);
+		playerTwo = new Player(2, turns);
+		
 		totalTurns = turns;
 		numberOfTurns=0;
 		mainPanel.setBounds(0,0,1200,700);
@@ -70,8 +75,10 @@ public class StartGame {
 		
 		playerPanel = mainPanel.createPlayerPanels(mainPanel);
 		playerPanel.setLayout(null);
-		playerOneScoreLabel.setText("0");
-		playerTwoScoreLabel.setText("0");
+		
+		//TODO update on repaint
+		playerOneScoreLabel.setText(playerOne.getCurrentScore());
+		playerTwoScoreLabel.setText(playerTwo.getCurrentScore());
 		playerOneScoreLabel.setBounds(100,0,70,30);
 		playerTwoScoreLabel.setBounds(100,30,70,30);
 		playerPanel.add(playerOneScoreLabel);
@@ -113,6 +120,9 @@ public class StartGame {
 		createWord.setBounds(0,50,100,50);
 		createWord.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				int playerOneScore = Integer.valueOf(playerOne.getCurrentScore());
+				int playerTwoScore = Integer.valueOf(playerTwo.getCurrentScore());
+				
 				PointCounter counts= new PointCounter();
 				wordLabel.setText(null);
 				boolean otherBoolean = counts.checkValidity(theWord);
@@ -156,14 +166,12 @@ public class StartGame {
 //					gameBoard.setBackground(Color.GREEN);
 					pointScore = counts.thePoints(theWord, playerNumber);
 					if (playerNumber==1){
-						playerOneScore = playerOneScore + pointScore;
-						String oneScore = Integer.toString(playerOneScore);
-						playerOneScoreLabel.setText(oneScore);
+						playerOne.incrementScore(pointScore);
+						playerOneScoreLabel.setText(playerOne.getCurrentScore());
 					}
 					if (playerNumber==2){
-						playerTwoScore = playerTwoScore + pointScore;
-						String twoScore = Integer.toString(playerTwoScore);
-						playerTwoScoreLabel.setText(twoScore);
+						playerTwo.incrementScore(pointScore);
+						playerTwoScoreLabel.setText(playerTwo.getCurrentScore());
 					}
 				}
 				existingStringCount=0;
@@ -261,7 +269,6 @@ public class StartGame {
 	public void newButtons (){
 		charPane.removeAll();
 		for (int i=0;i<9;i++){
-			
 			charPane.add(buttonMaker(i));
 			charPane.add(labelMaker(i));
 		}
