@@ -50,6 +50,14 @@ public class GamePanel extends JPanel implements ActionListener {
 		if (playerOne.size() > playerTwo.size()){
 			temp.putAll(playerOne);
 		}
+		else if (playerOne.size() == playerTwo.size()){
+			if (assessPoints(playerOne) > assessPoints(playerTwo)){
+				temp.putAll(playerOne);
+			}
+			else{
+				temp.putAll(playerTwo);
+			}
+		}
 		else{
 			temp.putAll(playerTwo);
 		}
@@ -61,6 +69,14 @@ public class GamePanel extends JPanel implements ActionListener {
 		
 		playerOne.clear();
 		playerTwo.clear();
+	}
+	
+	private int assessPoints(HashMap<WordButton, Character> temp){
+		String string = "";
+		for (WordButton word : temp.keySet()){
+			string += temp.get(word);
+		}
+		return point.getPointVal(string);
 	}
 	
 	private void createButtons(){
