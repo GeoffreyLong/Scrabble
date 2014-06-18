@@ -17,7 +17,7 @@ public class SelectedLabel extends JLabel{
 	}
 	
 	public void setSelectionLetter(char letter){
-		this.selectionLetter = letter;
+		selectionLetter = letter;
 		newSet();
 	}
 
@@ -26,10 +26,14 @@ public class SelectedLabel extends JLabel{
 	}
 	
 	public char getSelectionLetter(){
-		return this.selectionLetter;
+		return selectionLetter;
 	}
 	
 	public static char getLetter(){
 		return selectionLetter;
+	}
+	
+	public void clear(){
+		setSelectionLetter((char) 0);
 	}
 }

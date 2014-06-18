@@ -22,7 +22,6 @@ public class StartGame {
 	GamePanel gamePanel;
 	JLabel wordLabel = new JLabel();
 	JPanel panelButtons = new JPanel();
-	JPanel charPane = new JPanel();
 	BoardFrame mainPanel = new BoardFrame();
 	JLabel playerName = new JLabel();
 	PointCounter points = new PointCounter();
@@ -57,9 +56,6 @@ public class StartGame {
 		mainPanel.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainPanel.setLayout(null);
 		mainPanel.setVisible(true);
-		
-		
-		charPane = mainPanel.createCharPanel(mainPanel);
 		
 		//TODO update on repaint
 
@@ -117,8 +113,6 @@ public class StartGame {
 			}
 		});
 		panelButtons.add(createWord);
-		
-		charPane.setLayout(null);
 		
 		playerName.setText(String.valueOf(currentPlayer.getPlayerNumber()));
 		mainPanel.add(playerName);

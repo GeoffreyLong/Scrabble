@@ -34,6 +34,8 @@ public class BoardFrame extends JFrame {
 	
 	public void updateCharPanel(){
 		charPanel.newButtons();
+		validate();
+		repaint();
 	}
 	
 	public GamePanel createGamePanel(JFrame frame) {

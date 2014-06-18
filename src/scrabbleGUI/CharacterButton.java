@@ -14,6 +14,7 @@ public class CharacterButton extends JButton implements ActionListener{
 	private char character = 0;
 	private SelectedLabel select;
 	PointCounter points = new PointCounter();
+	private JLabel pointLabel = new JLabel();
 	
 	public CharacterButton(SelectedLabel select, int i){
 		setLayout(null);
@@ -30,12 +31,17 @@ public class CharacterButton extends JButton implements ActionListener{
 		setVisible(true);
 	}
 
+	public void setButton(){
+		this.character = randomChar();
+		setText(""+this.character);
+		labelMaker();
+	}
+	
 	public void actionPerformed(ActionEvent arg0) {
 		select.setSelectionLetter(this.character);
 	}
 	
 	public void labelMaker(){
-		JLabel pointLabel = new JLabel();
 		pointLabel.setText("(" + points.valueOfCharacter(this.character+"") + ")");
 		pointLabel.setBounds(5, 5, 40, 10);
 		add(pointLabel);	

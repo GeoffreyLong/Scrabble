@@ -2,6 +2,7 @@ package scrabbleGUI;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,12 +17,13 @@ import actualGame.PointCounter;
 
 public class CharacterPanel extends JPanel {
 	private SelectedLabel selectedLabel;
+	private CharacterButton[] buttons = new CharacterButton[9];
 	
 	public CharacterPanel() {
 		setBackground(Color.GREEN);
 		setBounds(0,600,750,100);
 		createSelectedLabel();
-		newButtons();
+		createButtons();
 		setLayout(null);
 		setVisible(true);
 	}
@@ -31,14 +33,20 @@ public class CharacterPanel extends JPanel {
 		add(selectedLabel);
 	}
 	
-	public void newButtons (){
-		removeAll();
-		
-		add(selectedLabel);
-		
+	private void createButtons(){
 		for (int i=0;i<9;i++){
-			add(new CharacterButton(selectedLabel, i));
+			CharacterButton button = new CharacterButton(selectedLabel, i);
+			add(button);
+			buttons[i] = button;
 		}
+		revalidate();
 		repaint();
+	}
+	
+	public void newButtons (){
+		selectedLabel.clear();
+		for (CharacterButton button : buttons){
+			button.setButton();
+		}
 	}
 }
