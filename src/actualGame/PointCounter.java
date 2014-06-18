@@ -1,27 +1,37 @@
 package actualGame;
+import java.awt.Point;
 import java.io.File;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Scanner;
+
 import scrabbleGUI.*;
 public class PointCounter {
-
+	private ArrayList<String> list = new ArrayList<String>();
 	
-	PlayerPanel playerPanels = new PlayerPanel();
-	
-	
-	public boolean checkValidity(String theString){
-		boolean theBoolean = false;
-		ArrayList<String> list = new ArrayList<String>();
+	public PointCounter(){
 		String fileName = System.getProperty("user.dir");
 		fileName += "/src/ScrabbleWordsOne.txt";
 		list = readWordsFromFile(fileName);
-		if (list.contains(theString)){
-			theBoolean=true;
+	}
+	PlayerPanel playerPanels = new PlayerPanel();
+	
+	
+	public int getPointVal(String string){
+		//TODO Check the entire board horiz and vert and see if there are any discrepancies
+		if (string.length() <= 1){
+			return 0;
 		}
-		return theBoolean;
+		
+		if (list.contains(string)){
+			return thePoints(string);
+		}
+		return -1;
 	}
 	
-	public int thePoints (String theString, int player){
+	private int thePoints (String theString){
 		int score = 0;
 		String delims = "";
 		String[] charArray = theString.split(delims);

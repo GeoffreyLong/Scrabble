@@ -13,8 +13,8 @@ import javax.swing.border.EmptyBorder;
 
 
 public class BoardFrame extends JFrame {
-
-	private JPanel contentPane;
+	private PlayerPanel playerPanel;
+	private CharacterPanel charPanel;
 
 	/**
 	 * Create the frame.
@@ -22,26 +22,29 @@ public class BoardFrame extends JFrame {
 	public BoardFrame() {
 		JFrame frame = new JFrame ("New Scrabble");
 		frame.setLayout(null);
+		createPlayerPanels(this);
+		createCharPanel(this);
 	}
 	
 	public JPanel createCharPanel(JFrame frame) {
-		JPanel charPanel = new CharacterPanel();
+		charPanel = new CharacterPanel();
 		frame.add(charPanel);
 		return charPanel;
 	}
 	
-	public JPanel createGameBoard(JFrame frame) {
-		JPanel gameBoard = new GamePanel();
-		frame.add(gameBoard);
-		return gameBoard;
+	public void updateCharPanel(){
+		charPanel.newButtons();
 	}
 	
-	public JPanel createPlayerPanels(JFrame frame) {
-		JPanel playerPanels = new PlayerPanel();
-		playerPanels.setBounds(850,600,150,100);
-		playerPanels.setBackground(Color.YELLOW);
-		frame.add(playerPanels);
-		return playerPanels;
+	public GamePanel createGamePanel(JFrame frame) {
+		GamePanel gamePanel = new GamePanel();
+		frame.add(gamePanel);
+		return gamePanel;
+	}
+	
+	private void createPlayerPanels(JFrame frame) {
+		playerPanel = new PlayerPanel();
+		frame.add(playerPanel);
 	}
 	
 	public JPanel createPanelButtons(JFrame frame) {
@@ -51,4 +54,17 @@ public class BoardFrame extends JFrame {
 		return panelButtons;
 	}
 
+	//Should avoid these calls through other classes (law of Demter)
+	public void updatePlayerScore(Player curPlayer){
+		if (curPlayer.getPlayerNumber() == 1){
+			playerPanel.setScoreOne(curPlayer.getCurrentScore());
+		}
+		else{
+			playerPanel.setScoreTwo(curPlayer.getCurrentScore());
+		}
+	}
+	
+	public void updateGameState(){
+		
+	}
 }
