@@ -47,6 +47,10 @@ public class CharacterButton extends JButton implements ActionListener{
 		add(pointLabel);	
 	}
 	
+	public char getCharacter(){
+		return this.character;
+	}
+	
 	//Gets a character based on frequency
 	private char randomChar(){
 		Random generator = new Random();

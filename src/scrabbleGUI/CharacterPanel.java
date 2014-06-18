@@ -6,6 +6,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.LinkedList;
 import java.util.Random;
 
 import javax.swing.JButton;
@@ -18,6 +19,7 @@ import actualGame.PointCounter;
 public class CharacterPanel extends JPanel {
 	private SelectedLabel selectedLabel;
 	private CharacterButton[] buttons = new CharacterButton[9];
+	private LinkedList<Character> characters = new LinkedList<Character>();
 	
 	public CharacterPanel() {
 		setBackground(Color.GREEN);
@@ -39,8 +41,24 @@ public class CharacterPanel extends JPanel {
 			add(button);
 			buttons[i] = button;
 		}
+		
+		makeSet();
+		
 		revalidate();
 		repaint();
+	}
+	
+	private void makeSet(){
+		characters.clear();
+		for (int i=0; i<9; i++){
+			if (characters.contains(buttons[i].getCharacter())){
+				buttons[i].setButton();
+				i--;
+			}
+			else{
+				characters.add(buttons[i].getCharacter());
+			}
+		}
 	}
 	
 	public void newButtons (){
@@ -48,5 +66,6 @@ public class CharacterPanel extends JPanel {
 		for (CharacterButton button : buttons){
 			button.setButton();
 		}
+		makeSet();
 	}
 }
