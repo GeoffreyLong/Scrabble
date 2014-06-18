@@ -70,7 +70,7 @@ public class StartGame {
 		annul.setBounds(0,0,100,50);
 		annul.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-
+				gamePanel.clear();
 			}
 		});
 		panelButtons.add(annul);
@@ -79,8 +79,6 @@ public class StartGame {
 		createWord.setBounds(0,50,100,50);
 		createWord.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				PointCounter counts = new PointCounter();
-
 				int pointValue = gamePanel.checkAndSave(currentPlayer.getPlayerNumber());
 				if (pointValue != -1){
 					currentPlayer.incrementScore(pointValue);
@@ -90,9 +88,8 @@ public class StartGame {
 					advanceGame();
 				}
 				else{
-					
+					//TODO some sort of warning alert
 				}
-				currentPlayer.setWordGuess("");
 			}
 		});
 		panelButtons.add(createWord);

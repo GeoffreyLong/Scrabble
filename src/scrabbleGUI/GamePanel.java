@@ -97,7 +97,12 @@ public class GamePanel extends JPanel implements ActionListener {
 
 	public int checkAndSave(int playerNumber){
 		int score = checkValid();
-		clear(playerNumber);
+		if (score != -1){
+			clearAndSave(playerNumber);
+		}
+		else{
+			clear();
+		}
 		return score;
 	}
 	
@@ -144,7 +149,7 @@ public class GamePanel extends JPanel implements ActionListener {
 		return totalPoints - currentTotalPoints;
 	}
 	
-	private void clear(int playerNumber){
+	private void clearAndSave(int playerNumber){
 		HashMap<WordButton, Character> temp = new HashMap<WordButton, Character>();
 
 		for (int i = 0; i < x_max; i++){
@@ -158,6 +163,14 @@ public class GamePanel extends JPanel implements ActionListener {
 		}
 		else{
 			playerTwo.putAll(temp);
+		}
+	}
+	
+	public void clear(){
+		for (int i = 0; i < x_max; i++){
+			for (int j = 0; j < y_max; j++){
+				buttons[i][j].clearTemp();
+			}
 		}
 	}
 }
