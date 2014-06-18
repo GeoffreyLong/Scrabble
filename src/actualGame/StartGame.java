@@ -20,15 +20,10 @@ import scrabbleGUI.*;
 public class StartGame {
 
 	GamePanel gamePanel;
-	JLabel wordLabel = new JLabel();
 	JPanel panelButtons = new JPanel();
 	BoardFrame mainPanel = new BoardFrame();
 	JLabel playerName = new JLabel();
-	PointCounter points = new PointCounter();
-	static String theLastChar;
-	String importantChar;
 
-	String[] chars = new String [9];
 	JLabel playerNameLabel = new JLabel();
 	int numberOfTurns;
 	int totalTurns;
@@ -39,10 +34,6 @@ public class StartGame {
 	public Player playerOne;
 	public Player playerTwo;
 	public Player currentPlayer;
-	
-	public static String curChar = "";
-	
-	public String longestString;
 	
 	public StartGame(int players, int turns) {
 		// Is there a design pattern for this (factory?)
@@ -62,9 +53,6 @@ public class StartGame {
 		
 		gamePanel = mainPanel.createGamePanel(mainPanel);
 		
-		longestString="";
-		
-
 		playerNameLabel.setText("Player One");
 		playerNameLabel.setFont(new Font("Tahoma", Font.BOLD, 30));
 		playerNameLabel.setBounds(750, 0, 200, 40);
@@ -82,8 +70,7 @@ public class StartGame {
 		annul.setBounds(0,0,100,50);
 		annul.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				currentPlayer.setWordGuess("");
-				wordLabel.setText(null);
+
 			}
 		});
 		panelButtons.add(annul);
@@ -93,16 +80,12 @@ public class StartGame {
 		createWord.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				PointCounter counts = new PointCounter();
-				wordLabel.setText(null);
+
 				int pointValue = gamePanel.checkAndSave(currentPlayer.getPlayerNumber());
 				if (pointValue != -1){
 					currentPlayer.incrementScore(pointValue);
 					
 					mainPanel.updatePlayerScore(currentPlayer);
-					
-					if (currentPlayer.getWordGuess().length() > longestString.length()){
-						longestString = currentPlayer.getWordGuess();
-					}
 					
 					advanceGame();
 				}
@@ -118,21 +101,7 @@ public class StartGame {
 		mainPanel.add(playerName);
 	}
 	
-	public void createString(String arg){
-		curChar = arg;
-		String theWord = currentPlayer.getWordGuess() + arg;
-		currentPlayer.setWordGuess(theWord);
-		wordLabel.setText(theWord);
-		wordLabel.setBounds(5,0,200,30);
-		wordLabel.setFont(new Font("Tahoma", Font.BOLD, 30));
-		gamePanel.add(wordLabel);
-	}
-	
-
-	
 	public void advanceGame(){
-		importantChar = theLastChar;
-
 		if (currentPlayer.getPlayerNumber() == 1){
 			currentPlayer = playerTwo;
 			playerNameLabel.setText("Player Two");
@@ -143,7 +112,6 @@ public class StartGame {
 			playerNameLabel.setText("Player One");
 			gamePanel.repaint();
 			mainPanel.updateCharPanel();
-			longestString="";
 			gamePanel.calculateTotalPoints();
 		}
 
