@@ -1,9 +1,12 @@
 package scrabbleGUI;
 
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.SpringLayout;
 import javax.swing.border.EmptyBorder;
 
 public class Frame extends JFrame{
@@ -11,7 +14,7 @@ public class Frame extends JFrame{
 	private static int ySize;
 
 	public Frame(){
-		setTitle("Light Cycles");
+		setTitle("Scrabble");
 		
 		//These size variables allow for certain positioning benefits
 		Toolkit tk = Toolkit.getDefaultToolkit();  

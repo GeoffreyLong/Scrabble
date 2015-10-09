@@ -30,7 +30,7 @@ public class GamePanel extends JPanel implements ActionListener {
 	public GamePanel() {
 		setBackground(Color.LIGHT_GRAY);
 		setLayout(null);
-		setBounds(0,0,1000,600);
+		setBounds(0,0,Y_SIZE,X_SIZE);
 		setVisible(true);
 		
 		createButtons();

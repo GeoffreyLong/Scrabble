@@ -18,8 +18,7 @@ public class Main {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Frame frame = new Frame();
-					frameDriver = new FrameDriver(frame);
+					frameDriver = new FrameDriver();
 					frameDriver.startPanel();
 				} catch (Exception e) {
 					e.printStackTrace();
