@@ -11,7 +11,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 
-public class GameStart {
+public class Main {
 	public static FrameDriver frameDriver;
 	
 	public static void main(String[] args) {
