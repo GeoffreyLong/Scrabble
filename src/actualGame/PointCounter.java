@@ -35,7 +35,7 @@ public class PointCounter {
 		int score = 0;
 		String delims = "";
 		String[] charArray = theString.split(delims);
-		for (int i = 1; i<=theString.length(); i++){
+		for (int i = 1; i< theString.length(); i++){
 			String thePointChar = charArray[i];
 			score = score + valueOfCharacter(thePointChar);
 		}
