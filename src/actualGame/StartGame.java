@@ -18,10 +18,9 @@ import java.util.Random;
 import scrabbleGUI.*;
 
 public class StartGame {
-
 	GamePanel gamePanel;
+	
 	JPanel panelButtons = new JPanel();
-	BoardFrame mainPanel = new BoardFrame();
 	JLabel playerName = new JLabel();
 
 	JLabel playerNameLabel = new JLabel();
@@ -34,24 +33,25 @@ public class StartGame {
 	public Player playerOne;
 	public Player playerTwo;
 	public Player currentPlayer;
+
+	private CharacterPanel charPanel;
+
+	private PlayerPanel playerPanel;
 	
-	public StartGame(int players, int turns) {
-		// Is there a design pattern for this (factory?)
+	public StartGame(int players, int turns, GamePanel gamePanel, CharacterPanel charPanel, PlayerPanel playerPanel, JPanel panelButtons) {
+		this.gamePanel = gamePanel;
+		this.charPanel = charPanel;
+		this.playerPanel = playerPanel;
+		this.panelButtons = panelButtons;
+		
 		playerOne = new Player(1, turns);
 		playerTwo = new Player(2, turns);
 		currentPlayer = playerOne;
 		
 		totalTurns = turns;
 		numberOfTurns=0;
-		mainPanel.setBounds(0,0,1200,700);
-		mainPanel.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		mainPanel.setLayout(null);
-		mainPanel.setVisible(true);
 		
 		//TODO update on repaint
-
-		
-		gamePanel = mainPanel.createGamePanel(mainPanel);
 		
 		playerNameLabel.setText("Player One");
 		playerNameLabel.setFont(new Font("Tahoma", Font.BOLD, 30));
@@ -64,8 +64,9 @@ public class StartGame {
 		turnsLeft.setText(theTurnsLeft);
 		turnsLeft.setBounds(750, 40, 300, 40);
 		gamePanel.add(turnsLeft);
-
-		panelButtons = mainPanel.createPanelButtons(mainPanel);
+		
+		
+		// TODO remove from here and encapsulate
 		JButton annul = new JButton ("Annul");
 		annul.setBounds(0,0,100,50);
 		annul.addActionListener(new ActionListener() {
@@ -83,7 +84,7 @@ public class StartGame {
 				if (pointValue != -1){
 					currentPlayer.incrementScore(pointValue);
 					
-					mainPanel.updatePlayerScore(currentPlayer);
+					updatePlayerScore(currentPlayer);
 					
 					advanceGame();
 				}
@@ -94,8 +95,8 @@ public class StartGame {
 		});
 		panelButtons.add(createWord);
 		
-		playerName.setText(String.valueOf(currentPlayer.getPlayerNumber()));
-		mainPanel.add(playerName);
+		// playerName.setText(String.valueOf(currentPlayer.getPlayerNumber()));
+		// mainPanel.add(playerName);
 	}
 	
 	public void advanceGame(){
@@ -108,7 +109,8 @@ public class StartGame {
 			currentPlayer = playerOne;
 			playerNameLabel.setText("Player One");
 			gamePanel.repaint();
-			mainPanel.updateCharPanel();
+			charPanel.newButtons();
+			charPanel.repaint();
 			gamePanel.calculateTotalPoints();
 		}
 
@@ -146,5 +148,14 @@ public class StartGame {
 		finalScore.setFont(new Font("Tahoma", Font.BOLD, 30));
 		gamePanel.add(finalScore);
 		gamePanel.repaint();
+	}
+	
+	public void updatePlayerScore(Player curPlayer){
+		if (curPlayer.getPlayerNumber() == 1){
+			playerPanel.setScoreOne(curPlayer.getCurrentScore());
+		}
+		else{
+			playerPanel.setScoreTwo(curPlayer.getCurrentScore());
+		}
 	}
 }

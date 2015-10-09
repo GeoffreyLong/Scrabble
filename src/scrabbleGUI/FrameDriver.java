@@ -37,21 +37,20 @@ public class FrameDriver {
 		startPanel.setVisible(false);
 		GamePanel gamePanel = new GamePanel();
 		frame.add(gamePanel);
-		
-		/*
-		JPanel panelButtons = new JPanel();
-		frame.add(panelButtons);
-		frame.add(panelButtons, BorderLayout.SOUTH);
-		*/
+
 		charPanel = new CharacterPanel();
 		frame.add(charPanel);
 		
 		playerPanel = new PlayerPanel();
 		frame.add(playerPanel);
 		
+		JPanel panelButtons = new JPanel();
+		panelButtons.setBounds(750,600,100,100);
+		frame.add(panelButtons);
+		
 		gamePanel.setVisible(true);
-		frame.validate();
+		frame.revalidate();
 		frame.repaint();
-		new StartGame(numOfPlayers, numOfTurns);
+		new StartGame(numOfPlayers, numOfTurns, gamePanel, charPanel, playerPanel, panelButtons);
 	}
 }

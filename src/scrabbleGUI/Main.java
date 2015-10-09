@@ -10,6 +10,10 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
+// TODO 
+// Implement the observer pattern or something to separate out the logics
+//		Right now it is a twisted mess... See this link for the observer pattern
+//		https://www.caveofprogramming.com/java/java-swing-tutorial-for-beginners.html
 
 public class Main {
 	public static FrameDriver frameDriver;
